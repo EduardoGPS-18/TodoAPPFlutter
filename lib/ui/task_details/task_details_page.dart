@@ -38,8 +38,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     if (task != null && task is TaskModel) {
       initialTaskState = task;
       widget.presenter.setTaskId(task.id.toString());
-      widget.presenter.switchCompleted(task.completed);
       widget.presenter.validateTitle(task.title);
+      widget.presenter.setSubtitle(task.subtitle);
+      widget.presenter.setDescription(task.description);
+      widget.presenter.setDate(task.endDate);
+      widget.presenter.setTime(TimeOfDay.fromDateTime(task.endDate));
+      widget.presenter.switchCompleted(task.completed);
     }
   }
 

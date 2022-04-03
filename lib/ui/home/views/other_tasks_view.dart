@@ -6,14 +6,18 @@ import '../../shared/components/cards/task_card.dart';
 class TaskListView extends StatelessWidget {
   final bool? isLoading;
   final List<TaskModel>? tasks;
-  final void Function(TaskModel task)? onTap;
+  final void Function(TaskModel)? onTap;
+  final void Function(TaskModel)? onLongPress;
+  final void Function(TaskModel, bool)? onDoublePressed;
   final void Function(TaskModel, bool?)? onTaskCompletedClick;
 
   const TaskListView({
     Key? key,
     this.tasks,
-    this.isLoading,
     this.onTap,
+    this.isLoading,
+    this.onLongPress,
+    this.onDoublePressed,
     this.onTaskCompletedClick,
   }) : super(key: key);
 
@@ -31,6 +35,8 @@ class TaskListView extends StatelessWidget {
                 onTap: () => onTap?.call(tasks![index]),
                 onTaskCompletedClick: (completed) => onTaskCompletedClick?.call(tasks![index], completed),
                 isLoading: isLoading,
+                onLongPress: () => onLongPress?.call(tasks![index]),
+                onDoubleTap: () => onDoublePressed?.call(tasks![index], !(tasks![index].completed)),
               ),
             );
           } else {

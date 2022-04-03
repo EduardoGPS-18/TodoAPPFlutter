@@ -63,6 +63,21 @@ class HomePresenter {
     offAllNavigatorNotifier.value = NavigationArguments(route: AppRoutes.loginPage);
   }
 
+  final toDeleteTaskNotifier = ValueNotifier<TaskModel?>(null);
+  void startDeleteTask(TaskModel task) {
+    toDeleteTaskNotifier.value = task;
+    toDeleteTaskNotifier.value = null;
+  }
+
+  Future<void> confirmDeleteTask(TaskModel task) async {
+    navigatorPopNotifier.value = null;
+    final token = (await currentUser).token;
+    await taskRepository.deleteTask(token: token, taskId: task.id.toString());
+    navigatorPopNotifier.value = true;
+    tasksNotifier.value?.removeWhere((element) => element.id == task.id);
+    tasksNotifier.value = [...?tasksNotifier.value];
+  }
+
   final currentPageNotifier = ValueNotifier<int>(0);
   void changeCurrentPage(int value) => currentPageNotifier.value = value;
 
@@ -70,5 +85,11 @@ class HomePresenter {
   void navigateToTaskDetails([TaskModel? task]) {
     navigatorNotifier.value = null;
     navigatorNotifier.value = NavigationArguments(route: AppRoutes.taskDetailsPage, arguments: task);
+  }
+
+  final navigatorPopNotifier = ValueNotifier<bool?>(null);
+  void navigatorPop() {
+    navigatorPopNotifier.value = true;
+    navigatorPopNotifier.value = null;
   }
 }
