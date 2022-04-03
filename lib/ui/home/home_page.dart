@@ -41,6 +41,35 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
       }
     });
+    widget.presenter.navigatorPopNotifier.addListener(() {
+      final pop = widget.presenter.navigatorPopNotifier.value;
+      if (pop == true) {
+        Navigator.pop(context);
+      }
+    });
+    widget.presenter.toDeleteTaskNotifier.addListener(() {
+      final task = widget.presenter.toDeleteTaskNotifier.value;
+      if (task != null) {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text('Confirmação de exclusão'),
+            content: const Text('Deseja confirmar a exclusão da tarefa?'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => widget.presenter.confirmDeleteTask(task),
+                child: const Text('Confirmar'),
+              ),
+              TextButton(
+                onPressed: widget.presenter.navigatorPop,
+                child: const Text('Cancelar'),
+              ),
+            ],
+          ),
+        );
+      }
+    });
+
     tabController = TabController(length: 2, vsync: this);
   }
 
@@ -87,6 +116,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 tasks: tasks?.where((element) => element.isToday).toList(),
                                 onTap: loading == true ? null : widget.presenter.navigateToTaskDetails,
                                 onTaskCompletedClick: loading == true ? null : widget.presenter.updateTaskCompleted,
+                                onLongPress: loading == true ? null : widget.presenter.startDeleteTask,
+                                onDoublePressed: loading == true ? null : widget.presenter.updateTaskCompleted,
                                 isLoading: loading,
                               ),
                         tasks?.where((element) => !element.isToday).isEmpty == true
@@ -96,7 +127,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             : TaskListView(
                                 tasks: tasks?.where((element) => !element.isToday).toList(),
                                 onTap: loading == true ? null : widget.presenter.navigateToTaskDetails,
+                                onLongPress: loading == true ? null : widget.presenter.startDeleteTask,
                                 onTaskCompletedClick: loading == true ? null : widget.presenter.updateTaskCompleted,
+                                onDoublePressed: loading == true ? null : widget.presenter.updateTaskCompleted,
                                 isLoading: loading,
                               ),
                       ],

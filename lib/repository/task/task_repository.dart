@@ -73,4 +73,15 @@ class TaskRepository {
     final response = await _client.put(Uri.parse(url), headers: headers, body: jsonEncode(bodyData));
     return TaskModel.fromApiMap(jsonDecode(response.body));
   }
+
+  Future<TaskModel> deleteTask({
+    required String token,
+    required String taskId,
+  }) async {
+    final url = '$getApiUrl/task/$taskId';
+    final headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'};
+
+    final response = await _client.delete(Uri.parse(url), headers: headers);
+    return TaskModel.fromApiMap(jsonDecode(response.body));
+  }
 }

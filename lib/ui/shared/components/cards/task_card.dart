@@ -5,6 +5,8 @@ import '../../../../models/task/task_model.dart';
 
 class TaskCard extends StatelessWidget {
   final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onDoubleTap;
   final TaskModel? task;
   final void Function(bool?)? onTaskCompletedClick;
   final bool? isLoading;
@@ -13,8 +15,10 @@ class TaskCard extends StatelessWidget {
     Key? key,
     this.onTap,
     this.task,
-    this.onTaskCompletedClick,
     this.isLoading,
+    this.onTaskCompletedClick,
+    this.onLongPress,
+    this.onDoubleTap,
   }) : super(key: key);
 
   @override
@@ -25,6 +29,8 @@ class TaskCard extends StatelessWidget {
       elevation: 8,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
+        onDoubleTap: onDoubleTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
