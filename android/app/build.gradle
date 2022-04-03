@@ -24,6 +24,10 @@ def flutterMinSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
 if (flutterMinSdkVersion == null) {
     flutterMinSdkVersion = flutter.minSdkVersion.toString()
 }
+def flutterTargetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion')
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = '16'
+}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'

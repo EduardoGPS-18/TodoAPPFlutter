@@ -53,7 +53,7 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 
 flutter_icons:
-  image_path: "assets/app_icon/todo.png"
+  image_path: "assets/app_icon/todo.jpeg"
   android: true
   ios: true
 

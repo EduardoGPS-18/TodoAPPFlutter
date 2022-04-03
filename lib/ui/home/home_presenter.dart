@@ -26,21 +26,24 @@ class HomePresenter {
 
   final tasksNotifier = ValueNotifier<List<TaskModel>?>(null);
   Future<void> getUserTasks() async {
-    tasksNotifier.value = await taskRepository.getTasksByToken(token: (await currentUser).token);
+    final tasks = await taskRepository.getTasksByToken(token: (await currentUser).token);
+    tasks?.sort((t1, t2) => t1.id > t2.id ? 1 : -1);
+    tasksNotifier.value = tasks;
   }
 
   void addOrUpdateTaskOnList(TaskModel task) {
     if (tasksNotifier.value?.map((e) => e.id).contains(task.id) == true) {
       tasksNotifier.value?.removeWhere((element) => element.id == task.id);
-      tasksNotifier.value = [...?tasksNotifier.value, task];
+      final tasks = [...?tasksNotifier.value, task];
+      tasksNotifier.value = tasks..sort((t1, t2) => t1.id > t2.id ? 1 : -1);
     } else {
-      tasksNotifier.value = [...?tasksNotifier.value, task];
+      final tasks = [...?tasksNotifier.value, task];
+      tasksNotifier.value = tasks..sort((t1, t2) => t1.id > t2.id ? 1 : -1);
     }
   }
 
   final loadintNotifier = ValueNotifier<bool?>(null);
   Future<void> updateTaskCompleted(TaskModel currentTask, bool? completed) async {
-    loadintNotifier.value = true;
     final token = (await currentUser).token;
     final task = await taskRepository.updateTask(
       token: token,
@@ -52,7 +55,6 @@ class HomePresenter {
       subtitle: currentTask.subtitle,
     );
     addOrUpdateTaskOnList(task);
-    loadintNotifier.value = false;
   }
 
   final offAllNavigatorNotifier = ValueNotifier<NavigationArguments?>(null);
