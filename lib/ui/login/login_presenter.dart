@@ -56,9 +56,11 @@ class LoginPresenter {
       navigatorNotifier.value = NavigationArguments(route: AppRoutes.homePage);
     } on InvalidCredentialsException {
       errorStateNotifier.value = 'Credenciais inválidas!';
+    } catch (err) {
+      errorStateNotifier.value = 'Ocorreu um erro! Tente novamente mais tarde e notifique o suporte. Code: $err';
+    } finally {
+      buttonStateNotifier.value = buttonStateNotifier.value.copyWith(isLoading: false);
     }
-
-    buttonStateNotifier.value = buttonStateNotifier.value.copyWith(isLoading: false);
   }
 
   final navigatorNotifier = ValueNotifier<NavigationArguments?>(null);
