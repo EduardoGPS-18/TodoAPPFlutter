@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Todo APP',
       theme: AppTheme.themeData,
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.splashPage,

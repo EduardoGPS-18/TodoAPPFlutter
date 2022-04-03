@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.todo_app_flutter">
    <application
-        android:label="todo_app_flutter"
+        android:label="TODO APP"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
