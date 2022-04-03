@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     widget.presenter.navigatorPopNotifier.addListener(() {
       final pop = widget.presenter.navigatorPopNotifier.value;
       if (pop == true) {
-        Navigator.pop(context);
+        Navigator.of(context).pop();
       }
     });
     widget.presenter.toDeleteTaskNotifier.addListener(() {

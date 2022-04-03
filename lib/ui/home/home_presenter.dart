@@ -66,6 +66,7 @@ class HomePresenter {
   final toDeleteTaskNotifier = ValueNotifier<TaskModel?>(null);
   void startDeleteTask(TaskModel task) {
     toDeleteTaskNotifier.value = task;
+    toDeleteTaskNotifier.value = null;
   }
 
   Future<void> confirmDeleteTask(TaskModel task) async {
@@ -89,5 +90,6 @@ class HomePresenter {
   final navigatorPopNotifier = ValueNotifier<bool?>(null);
   void navigatorPop() {
     navigatorPopNotifier.value = true;
+    navigatorPopNotifier.value = null;
   }
 }
